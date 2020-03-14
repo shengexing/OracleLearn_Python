@@ -5,6 +5,7 @@ import cx_Oracle as cx
 # 连接 Oracle 数据库
 con = cx.connect('scott', 'tiger', '127.0.0.1:1521/orcl')
 
+
 # exp4_35：
 # 【例 4.35】 在 emp 表中，按照部门编号（deptno）和职务（job）列进行分组
 tableHead4_35 = ['deptno', 'job']
