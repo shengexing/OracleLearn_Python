@@ -20,8 +20,8 @@ sqlCase4_23 = "select empno, ename, sal from emp where sal <> all(3000, 950, 800
 # 【例 4.24】 在 emp 表中，使用 LIKE 关键字匹配以字母 S 开头的任意长度的员工名称
 tableHead4_24 = ['empno', 'ename', 'job']
 sqlCase4_24 = "select empno, ename, job from emp where job like 'S%'" \
-
-# exp4_25：
+ \
+    # exp4_25：
 # 【例 4.25】 在 emp 表中，查询工作是 SALESMAN 的员工姓名，但是不记得 SALESMAN 的准确拼写，
 # 但还记得它的第一个字符是 S ，第三个字符是 L ，第五个字符是 S
 tableHead4_25 = ['empno', 'ename', 'job']
@@ -77,26 +77,18 @@ tableHead4_34 = ['empno', 'ename', 'sal']
 sqlCase4_34 = "select empno, ename, sal from emp where sal < 2000 or sal > 3000"
 
 
-cursor_scott = con_scott.cursor()  # 创建游标
-cursor_hr = con_hr.cursor()
+# 连接数据库，执行 SELECT 语句，打印数据
+def printData(connect, tableHead, sqlCase):
+    cursor = connect.cursor()  # 创建游标
+    print(tableHead)  # 打印表头
+    cursor.execute(sqlCase)  # 执行sql语句，可以替换不同的例子（93710）
 
-# HR 模式
-print(tableHead4_32)  # 打印表头
-cursor_hr.execute(sqlCase4_32)  # 执行sql语句，可以替换不同的例子（93710）
-# 遍历游标，打印数据
-for result in cursor_hr:
-    print(result)
+    # 遍历游标，打印数据
+    for result in cursor:
+        print(result)
 
-print('---------------------------------------')
+    cursor.close()  # 关闭游标
+    connect.close()  # 关闭数据库连接
 
-# SCOTT 模式
-print(tableHead4_34)  # 打印表头
-cursor_scott.execute(sqlCase4_34)  # 执行sql语句，可以替换不同的例子（93710）
-# 遍历游标，打印数据
-for result in cursor_scott:
-    print(result)
 
-cursor_scott.close()  # 关闭游标
-cursor_hr.close()
-con_scott.close()  # 关闭数据库连接
-con_hr.close()
+printData(con_scott, tableHead4_34, sqlCase4_34)  # 执行 exp4_34
