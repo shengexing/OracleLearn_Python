@@ -1,6 +1,9 @@
 # OracleLearn_Python
 ## Oracle 数据库学习（Python）
+
 ### Oracle 11g 从入门到精通（第二版）
+![avatar](https://mubu.com/document_image/dd7cd564-8caa-4bfa-8984-df61ec3b2a2b-292668.jpg)
+
 #### ISBN：978-7-302-45822-7
 #### 出版社：清华大学出版社
 #### 编著：明日科技
