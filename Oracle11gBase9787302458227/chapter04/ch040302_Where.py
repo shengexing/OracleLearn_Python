@@ -1,10 +1,10 @@
-" 章节4.3.3 分组查询"
+""" 章节4.3.3 分组查询 """
 
 import cx_Oracle as cx
 
 # 连接 Oracle 数据库
-con_scott = cx.connect('scott', 'tiger', '127.0.0.1:1521/orcl')
-
+con_scott = cx.connect('scott', 'tiger', '127.0.0.1:1521/orcl')  # SCOTT 模式
+con_hr = cx.connect('hr', 'hr', '127.0.0.1:1521/orcl')  # HR 模式
 
 # exp4_22：
 # 【例 4.22】 在 SCOOT 模式下，查询 emp 表中工资（sal）大于 1500 的数据记录
@@ -19,7 +19,7 @@ sqlCase4_23 = "select empno, ename, sal from emp where sal <> all(3000, 950, 800
 # exp4_24：
 # 【例 4.24】 在 emp 表中，使用 LIKE 关键字匹配以字母 S 开头的任意长度的员工名称
 tableHead4_24 = ['empno', 'ename', 'job']
-sqlCase4_24 = "select empno, ename, job from emp where job like 'S%'"\
+sqlCase4_24 = "select empno, ename, job from emp where job like 'S%'" \
 
 # exp4_25：
 # 【例 4.25】 在 emp 表中，查询工作是 SALESMAN 的员工姓名，但是不记得 SALESMAN 的准确拼写，
@@ -39,16 +39,64 @@ sqlCase4_26 = "select empno, ename, job, hiredate " \
 tableHead4_27 = ['deptno', 'dname', 'loc']
 sqlCase4_27 = "select * " \
               "from dept_temp " \
-              "where dname like 'IT^_%' escape '^'" # 这里不使用 \ 来转义，因为字符串中 \ 也有转义的含义，需要写为 \\
+              "where dname like 'IT^_%' escape '^'"  # 这里不使用 \ 来转义，因为字符串中 \ 也有转义的含义，需要写为 \\
+
+# exp4_28：
+# 【例 4.28】 在 emp 表中，使用 IN 关键字查询职务为 PRESIDENT、MANAGER 和 ANALYST 中任意一种员工信息
+tableHead4_28 = ['empno', 'ename', 'job']
+sqlCase4_28 = "select empno, ename, job from emp where job in ('PRESIDENT', 'MANAGER', 'ANALYST')"
+
+# exp4_29：
+# 【例 4.29】 在 emp 表中，使用 NOT IN 关键字查询职务不在指定目标列表 (PRESIDENT, MANAGER, ANALYST) 范围内的员工信息
+tableHead4_29 = ['empno', 'ename', 'job']
+sqlCase4_29 = "select empno, ename, job from emp where job not in ('PRESIDENT', 'MANAGER', 'ANALYST')"
+
+# exp4_30：
+# 【例 4.30】 在 emp 表中，使用 BETWEEN...AND 关键字查询工资（sal）在 2000 到 3000 之间的员工信息
+tableHead4_30 = ['empno', 'ename', 'sal']
+sqlCase4_30 = "select empno, ename, sal from emp where sal between 2000 and 3000"
+
+# exp4_31：
+# 【例 4.31】 在 emp 表中，使用 NOT...BETWEEN...AND 关键字查询工资（sal）不在 1000 到 3000 之间的员工信息
+tableHead4_31 = ['empno', 'ename', 'sal']
+sqlCase4_31 = "select empno, ename, sal from emp where sal not between 1000 and 3000"
+
+# exp4_32：
+# 【例 4.32】 在 HR 模式下，使用 IS NULL 关键字过滤出 locations 表中省份或州（state_province）的名称为空值的街道地址信息
+tableHead4_32 = ['street_address']
+sqlCase4_32 = "select street_address from locations where state_province is null"
+
+# exp4_33：
+# 【例 4.33】 在 emp 表中，使用 AND 运算符查询工资（sal）在 2000 到 3000 之间的员工信息
+tableHead4_33 = ['empno', 'ename', 'sal']
+sqlCase4_33 = "select empno, ename, sal from emp where sal >= 2000 and sal <= 3000"
+
+# exp4_34：
+# 【例 4.34】 在 emp 表中，使用 OR 运算符查询工资（sal）小于 2000 或工资大于 3000 的员工信息
+tableHead4_34 = ['empno', 'ename', 'sal']
+sqlCase4_34 = "select empno, ename, sal from emp where sal < 2000 or sal > 3000"
 
 
-cursor = con_scott.cursor()  # 创建游标
-print(tableHead4_27) # 打印表头
-cursor.execute(sqlCase4_27)  # 执行sql语句，可以替换不同的例子（93710）
+cursor_scott = con_scott.cursor()  # 创建游标
+cursor_hr = con_hr.cursor()
 
+# HR 模式
+print(tableHead4_32)  # 打印表头
+cursor_hr.execute(sqlCase4_32)  # 执行sql语句，可以替换不同的例子（93710）
 # 遍历游标，打印数据
-for result in cursor:
+for result in cursor_hr:
     print(result)
 
-cursor.close()  # 关闭游标
+print('---------------------------------------')
+
+# SCOTT 模式
+print(tableHead4_34)  # 打印表头
+cursor_scott.execute(sqlCase4_34)  # 执行sql语句，可以替换不同的例子（93710）
+# 遍历游标，打印数据
+for result in cursor_scott:
+    print(result)
+
+cursor_scott.close()  # 关闭游标
+cursor_hr.close()
 con_scott.close()  # 关闭数据库连接
+con_hr.close()
