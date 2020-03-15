@@ -1,10 +1,10 @@
-" 章节4.3.3 分组查询"
+""" 章节4.3.3 分组查询 """
 
 import cx_Oracle as cx
+from Oracle11gBase9787302458227.chapter04 import OptOracle
 
 # 连接 Oracle 数据库
-con = cx.connect('scott', 'tiger', '127.0.0.1:1521/orcl')
-
+con_scott = cx.connect('scott', 'tiger', '127.0.0.1:1521/orcl')
 
 # exp4_35：
 # 【例 4.35】 在 emp 表中，按照部门编号（deptno）和职务（job）列进行分组
@@ -18,13 +18,4 @@ tableHead4_36 = ['job', 'avg(sal)', 'sum(sal)', 'max(sal)', 'count(job)']
 sqlCase4_36 = "select job, avg(sal), sum(sal), max(sal), count(job) from emp group by job"
 
 
-cursor = con.cursor()  # 创建游标
-print(tableHead4_36) # 打印表头
-cursor.execute(sqlCase4_36)  # 执行sql语句，可以替换不同的例子（93710）
-
-# 遍历游标，打印数据
-for result in cursor:
-    print(result)
-
-cursor.close()  # 关闭游标
-con.close()  # 关闭数据库连接
+OptOracle.printData(con_scott, tableHead4_36, sqlCase4_36)  # 执行 exp4_36
