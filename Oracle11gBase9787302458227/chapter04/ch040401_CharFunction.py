@@ -66,4 +66,4 @@ tableHead4_68 = ['substr(\'MessageBox\', 8, 3)']
 sqlCase4_68 = "select substr('MessageBox', 8, 3) from dual"
 
 OptOracle.printData(con_hr, tableHead4_65, sqlCase4_65)  # 执行 exp4_65
-OptOracle.printData(con_scott, tableHead4_68, sqlCase4_68)  # 执行 exp4_67
+OptOracle.printData(con_scott, tableHead4_68, sqlCase4_68)  # 执行 exp4_68
