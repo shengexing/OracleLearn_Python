@@ -8,7 +8,7 @@ con_scott = cx.connect('scott', 'tiger', '127.0.0.1:1521/orcl')  # SCOTT 模式
 
 # exp4_77：
 # 【例 4.77】 在 SCOTT 模式下，使用 emp 表中查询部门名称（dname）为 “RESEARCH” 的员工信息
-tableHead4_77 = ['员工总数', '平均工资']
+tableHead4_77 = ['empno', 'ename', 'job']
 sqlCase4_77 = "select empno, ename, job from EMP " \
               "where deptno=(select deptno from DEPT " \
               "where dname='RESEARCH')"
